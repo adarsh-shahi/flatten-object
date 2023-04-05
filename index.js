@@ -1,43 +1,29 @@
-// Define a function to flatten a complex object
 function flattenObject(flattenedObject, complexObject, parentObjectName = "") {
 	for (const property in complexObject) {
 		// Create a prefix for the current property name based on its parent object name
-		let currentObjectName = parentObjectName
+		const currentObjectName = parentObjectName
 			? `${parentObjectName}_${property}`
 			: property;
 
-		// Check if the current property is an object (but not an array or null)
-		if (Array.isArray(complexObject[property])) {
-			console.log(currentObjectName);
-			for (let i = 0; i < complexObject[property].length; i++) {
-				if (
-					typeof complexObject[property][i] === "object" &&
-					complexObject[property] !== null
-				) {
-					console.log("Element");
-					console.log(complexObject[property][i]);
-					flattenObject(
-						flattenedObject,
-						complexObject[property][i],
-						currentObjectName + "_" + i
-					);
+		const propertyValue = complexObject[property];
+
+		if (Array.isArray(propertyValue)) {
+			// If the current property is an array, loop through each element and recursively call the flattenObject function with the current element as the new complex object and a new prefix including the element index
+			for (let i = 0; i < propertyValue.length; i++) {
+				const currentElementName = `${currentObjectName}_${i}`;
+
+				if (typeof propertyValue[i] === "object" && propertyValue[i] !== null) {
+					flattenObject(flattenedObject, propertyValue[i], currentElementName);
 				} else {
-					flattenedObject[currentObjectName] = complexObject[property][i];
+					flattenedObject[currentElementName] = propertyValue[i];
 				}
 			}
-		} else if (
-			typeof complexObject[property] === "object" &&
-			complexObject[property] !== null
-		) {
-			// Recursively call the flattenObject function with the current property as the new complex object and the current prefix as the new parent object name
-			flattenObject(
-				flattenedObject,
-				complexObject[property],
-				currentObjectName
-			);
+		} else if (typeof propertyValue === "object" && propertyValue !== null) {
+			// If the current property is an object (but not an array or null), recursively call the flattenObject function with the current property as the new complex object and the current prefix as the new parent object name
+			flattenObject(flattenedObject, propertyValue, currentObjectName);
 		} else {
 			// Otherwise, add the current property to the flattened object with the current prefix as the key
-			flattenedObject[currentObjectName] = complexObject[property];
+			flattenedObject[currentObjectName] = propertyValue;
 		}
 	}
 }
