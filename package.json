@@ -1,0 +1,23 @@
+{
+  "name": "flatobject",
+  "version": "1.0.0",
+  "description": "flatten all your fat nested objects",
+  "main": "index.js",
+  "type": "module", 
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adarsh-shahi/flatten-object.git"
+  },
+  "keywords": [
+    "object"
+  ],
+  "author": "Adarsh Shahi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adarsh-shahi/flatten-object/issues"
+  },
+  "homepage": "https://github.com/adarsh-shahi/flatten-object#readme"
+}
